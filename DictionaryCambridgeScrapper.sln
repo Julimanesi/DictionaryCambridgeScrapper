@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32929.385
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DictionaryCambridgeScrapper", "DictionaryCambridgeScrapper\DictionaryCambridgeScrapper.csproj", "{B9734021-7771-413E-A95F-DCF02A300558}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B9734021-7771-413E-A95F-DCF02A300558}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9734021-7771-413E-A95F-DCF02A300558}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9734021-7771-413E-A95F-DCF02A300558}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9734021-7771-413E-A95F-DCF02A300558}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A4107762-963E-4AE0-9D5B-608728A25D64}
+	EndGlobalSection
+EndGlobal
