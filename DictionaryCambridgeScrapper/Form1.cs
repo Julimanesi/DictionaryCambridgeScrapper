@@ -46,6 +46,7 @@ namespace DictionaryCambridgeScrapper
                 list = richTextBoxPalabras.Lines.ToList();
                 
             }
+            list=list.Distinct().ToList();
             progreso.Visible = true;
             progreso.Maximum = list.Count;
             progreso.Value = 0;

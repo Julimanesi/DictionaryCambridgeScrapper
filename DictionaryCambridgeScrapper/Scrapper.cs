@@ -16,7 +16,7 @@ namespace DictionaryCambridgeScrapper
         public static Resultado returnResultado(string palabraBuscada )
         {
             string pronuc = "";
-            List<string> Traduclist = new List<string>();
+            List<string> Traduclist = new();
             
             var htmlDoc = web.Load(UrlBase + palabraBuscada);
             var htmlNodePronun = htmlDoc.DocumentNode.SelectSingleNode("/html/body/div[2]/div/div[1]/div[2]/article/div[2]/div[1]/div[2]/div[2]/div/span/div/span/div/span[1]/span[2]/span");
@@ -44,6 +44,11 @@ namespace DictionaryCambridgeScrapper
                     }
                 }
             }
+
+
+
+
+
             Form1.progreso.Value++;
 
             return new Resultado(palabraBuscada,pronuc,Traduclist.Distinct().ToList());
