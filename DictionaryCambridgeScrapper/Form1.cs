@@ -44,7 +44,10 @@ namespace DictionaryCambridgeScrapper
             {
                 
                 list = richTextBoxPalabras.Lines.ToList();
-                
+            }
+            else
+            {
+                richTextBoxPalabras.Lines = list.ToArray();
             }
             list=list.Distinct().ToList();
             progreso.Visible = true;

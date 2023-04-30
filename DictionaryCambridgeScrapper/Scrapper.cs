@@ -17,8 +17,15 @@ namespace DictionaryCambridgeScrapper
         {
             string pronuc = "";
             List<string> Traduclist = new();
+            List<string> OracionesEjemploIngles = new();
+            List<string> Definiciones = new();
             
             var htmlDoc = web.Load(UrlBase + palabraBuscada);
+            var htmlNodePalabraBuscada = htmlDoc.DocumentNode.SelectSingleNode("/html/body/div[2]/div/div[1]/div[2]/article/div[2]/div[1]/div[2]/div[2]/div/span/div/span/div/div[1]/h2/span");
+            if( htmlNodePalabraBuscada != null)
+            {
+                palabraBuscada = htmlNodePalabraBuscada.InnerText;
+            }
             var htmlNodePronun = htmlDoc.DocumentNode.SelectSingleNode("/html/body/div[2]/div/div[1]/div[2]/article/div[2]/div[1]/div[2]/div[2]/div/span/div/span/div/span[1]/span[2]/span");
             if (htmlNodePronun != null)
             {
@@ -42,16 +49,23 @@ namespace DictionaryCambridgeScrapper
                     {
                         Traduclist.Add(nNode.InnerText);
                     }
+                    if (nNode.NodeType == HtmlNodeType.Element && nNode.HasAttributes && nNode.Attributes[0].Value == "eg deg")
+                    {
+                        OracionesEjemploIngles.Add(nNode.InnerText);
+                    }
+                }
+                foreach (var nNode in htmlNodePosBody.Descendants("div"))
+                {
+                    if (nNode.NodeType == HtmlNodeType.Element && nNode.HasAttributes && nNode.Attributes[0].Value == "def ddef_d db")
+                    {
+                        Definiciones.Add(nNode.InnerText);
+                    }
                 }
             }
 
-
-
-
-
             Form1.progreso.Value++;
 
-            return new Resultado(palabraBuscada,pronuc,Traduclist.Distinct().ToList());
+            return new Resultado(palabraBuscada,pronuc,Traduclist.Distinct().ToList(), OracionesEjemploIngles.Distinct().ToList(),Definiciones.Distinct().ToList());
         }
     }
 }

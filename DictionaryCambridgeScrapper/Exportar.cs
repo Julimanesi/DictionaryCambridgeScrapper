@@ -1,4 +1,5 @@
-﻿using System;
+﻿using InglesToAnki;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,19 +16,24 @@ namespace DictionaryCambridgeScrapper
             ListaPalabras = listaPalabras;
         }
 
-        List<Resultado> ObtenerResultados()
+        async Task<List<Resultado>> ObtenerResultados()
         {
             List<Resultado> resultado = new List<Resultado>();
             foreach (var item in ListaPalabras)
             {
                 resultado.Add(Scrapper.returnResultado(item));
+                //resultado.Add(await DictionaryApi.returnResultado(item)); 
+                //Agregar las traducciones de la otra api
             }
             return resultado;
         }
 
-        public void GuardarArchivo()
+        public async void GuardarArchivo()
         {
-            List<string> Archivo = CrearArchivo(ObtenerResultados());
+            List<string> Archivo = CrearArchivo(await ObtenerResultados());
+            List<string> SinTraducir = Archivo.Where(x => x.Contains("; []; ;;")).Select(x=>x.Replace("; []; ;;", "")).ToList();
+            Archivo = Archivo.Where(x => !x.Contains("; []; ;;")).ToList();
+
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "Texto |*.txt";
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
@@ -35,6 +41,7 @@ namespace DictionaryCambridgeScrapper
                 try
                 {
                     System.IO.File.WriteAllLines(saveFileDialog.FileName, Archivo);
+                    System.IO.File.WriteAllLines(saveFileDialog.FileName.Insert(saveFileDialog.FileName.LastIndexOf(".txt"),"_SinTraducir"), SinTraducir);
                 }catch(IOException e)
                 {
                     MessageBox.Show("Error al guardar: " + e.ToString());
@@ -46,23 +53,30 @@ namespace DictionaryCambridgeScrapper
         {
             List<string> strings = new List<string>();
 
-            foreach(Resultado resultado in resultados)
+            foreach(Resultado resultado in resultados.DistinctBy(x=>x.PalabraBuscada).ToList())
             {
                 string aux = resultado.PalabraBuscada + "; " + "[" + resultado.Pronunciacion + "]; ";
-                foreach (string trad in resultado.Traducciones)
-                {
-                    foreach(string sep in trad.Trim().Split(", "))
-                        aux += !aux.Contains(sep) ? sep.Trim() + ", " : "";
-                }
-                aux = aux.Length> 2? aux.Substring(0, aux.Length - 2) : aux;
-
-                if(resultado.Traducciones.Count>0)
-                    strings.Add(aux);
-
+                
+                aux += string.Join('\n', SeparadorString(resultado.OracionesEjemIngles));
+                aux += ";";
+                aux += string.Join('\n', SeparadorString(resultado.Definiciones));
+                aux += ";";
+                aux += string.Join('\n', SeparadorString(resultado.Traducciones));
+                strings.Add(aux);
             }
 
             return strings;
         }
-
+        string SeparadorString(List<string> ListaString) 
+        {
+            string aux = "";
+            foreach (string trad in ListaString)
+            {
+                foreach (string sep in trad.Trim().Split(", "))
+                    aux += !aux.Contains(sep) ? sep.Trim() + ", " : "";
+            }
+            aux = aux.Length > 2 ? aux.Substring(0, aux.Length - 2) : aux;
+            return aux;
+        }
     }
 }

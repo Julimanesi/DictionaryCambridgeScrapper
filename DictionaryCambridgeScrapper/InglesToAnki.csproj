@@ -12,4 +12,8 @@
     <PackageReference Include="HtmlAgilityPack" Version="1.11.46" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="CollingsApiClient\" />
+  </ItemGroup>
+
 </Project>
