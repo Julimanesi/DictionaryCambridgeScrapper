@@ -42,7 +42,9 @@ namespace DictionaryCambridgeScrapper
                 {
                     System.IO.File.WriteAllLines(saveFileDialog.FileName, Archivo);
                     System.IO.File.WriteAllLines(saveFileDialog.FileName.Insert(saveFileDialog.FileName.LastIndexOf(".txt"),"_SinTraducir"), SinTraducir);
-                }catch(IOException e)
+                    System.IO.File.AppendAllLines(Form1.PathArchivoYaImportadas,ListaPalabras);
+                }
+                catch(IOException e)
                 {
                     MessageBox.Show("Error al guardar: " + e.ToString());
                 }
@@ -57,7 +59,7 @@ namespace DictionaryCambridgeScrapper
             {
                 string aux = resultado.PalabraBuscada + "; " + "[" + resultado.Pronunciacion + "]; ";
                 
-                aux += string.Join('\n', SeparadorString(resultado.OracionesEjemIngles));
+                aux += string.Join('\n', resultado.OracionesEjemIngles);
                 aux += ";";
                 aux += string.Join('\n', SeparadorString(resultado.Definiciones));
                 aux += ";";

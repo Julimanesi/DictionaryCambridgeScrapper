@@ -1,3 +1,5 @@
+using System.Security.Cryptography;
+
 namespace DictionaryCambridgeScrapper
 {
     public partial class Form1 : Form
@@ -9,8 +11,10 @@ namespace DictionaryCambridgeScrapper
         }
 
         public static ProgressBar progreso;
-
+        public static string PathArchivoYaImportadas = "ya importadas.txt";
+        
         List<string> list = new List<string>();
+        List<string> listYaimportadas = new List<string>();
 
         private void checkBoxCargarDesdeArchivo_CheckedChanged(object sender, EventArgs e)
         {
@@ -49,7 +53,9 @@ namespace DictionaryCambridgeScrapper
             {
                 richTextBoxPalabras.Lines = list.ToArray();
             }
-            list=list.Distinct().ToList();
+            ObtenerYaImportadas();
+            list =list.Distinct().ToList();
+            list = list.Where(x=> !listYaimportadas.Contains(x)).ToList();
             progreso.Visible = true;
             progreso.Maximum = list.Count;
             progreso.Value = 0;
@@ -59,6 +65,20 @@ namespace DictionaryCambridgeScrapper
 
             progreso.Visible = false;
             buttonObtener.Text = "Obtener";
+        }
+
+        private void ObtenerYaImportadas()
+        {
+            
+            if (System.IO.File.Exists(PathArchivoYaImportadas))
+            {
+                listYaimportadas = System.IO.File.ReadAllLines(PathArchivoYaImportadas).ToList();
+                listYaimportadas = listYaimportadas.Distinct().ToList();
+            }
+            else
+            {
+                System.IO.File.Create(PathArchivoYaImportadas);
+            }
         }
     }
 }
