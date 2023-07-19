@@ -16,7 +16,7 @@ namespace InglesToAnki
         private static readonly string UrlBase = "https://dle.rae.es/";
         private static HtmlWeb web = new HtmlWeb();
 
-        public static ResultadoEspaniol returnResultado(string palabraBuscada)
+        public static ResultadoEspaniol returnResultado(string palabraBuscada,string nombreVariante="")
         {
            
             List<string> Variantes = new();
@@ -28,7 +28,7 @@ namespace InglesToAnki
             var htmlDoc = web.Load(UrlBase + palabraBuscada);
             
             var htmlNodePosBody = htmlDoc.DocumentNode.SelectSingleNode("/html/body/div[1]/div[3]/div[1]/section/div[2]/article");
-
+            palabraBuscada = nombreVariante != "" ? nombreVariante : palabraBuscada;
             if (htmlNodePosBody != null)
             {
                 foreach (var nNode in htmlNodePosBody.Descendants("p"))
@@ -43,7 +43,8 @@ namespace InglesToAnki
                                 if (nNodeAnvchor != null && nNodeAnvchor.NodeType == HtmlNodeType.Element && nNodeAnvchor.HasAttributes && nNodeAnvchor.Attributes.Count > 1)
                                 {
                                     string direccion = nNodeAnvchor.Attributes[1].Value;
-                                    return returnResultado(direccion);
+                                    string nomVariante = nNodeAnvchor.InnerText.Replace(".","");
+                                    return returnResultado(direccion, nomVariante);
                                 }
                                 break;
                             case "n1": //variantes

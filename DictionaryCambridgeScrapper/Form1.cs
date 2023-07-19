@@ -65,7 +65,7 @@ namespace DictionaryCambridgeScrapper
                     list = list.Where(x => !listYaimportadasIngles.Contains(x)).ToList();
                     break;
                 case 1://Español
-                    //ObtenerYaImportadasEspaniol();
+                    ObtenerYaImportadasEspaniol();
                     list = list.Where(x => !listYaimportadasEspaniol.Contains(x)).ToList();
                     break;
             }

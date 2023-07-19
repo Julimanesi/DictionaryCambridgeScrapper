@@ -42,7 +42,8 @@ namespace DictionaryCambridgeScrapper
                 try
                 {
                     System.IO.File.WriteAllLines(saveFileDialog.FileName, Archivo);
-                    System.IO.File.WriteAllLines(saveFileDialog.FileName.Insert(saveFileDialog.FileName.LastIndexOf(".txt"),"_SinTraducir"), SinTraducir);
+                    if (SinTraducir.Count > 0)
+                        System.IO.File.WriteAllLines(saveFileDialog.FileName.Insert(saveFileDialog.FileName.LastIndexOf(".txt"),"_SinTraducir"), SinTraducir);
                     System.IO.File.AppendAllLines(Form1.PathArchivoYaImportadasIngles,ListaPalabras);
                 }
                 catch(IOException e)
@@ -97,8 +98,8 @@ namespace DictionaryCambridgeScrapper
         public async void GuardarArchivoEspaniol()
         {
             List<string> Archivo = CrearArchivoEspaniol(await ObtenerResultadosEspaniol());
-            List<string> SinTraducir = Archivo.Where(x => x.Contains("; []; ;;")).Select(x => x.Replace("; []; ;;", "")).ToList();
-            Archivo = Archivo.Where(x => !x.Contains("; []; ;;")).ToList();
+            List<string> SinTraducir = Archivo.Where(x => x.Contains(";;;;;")).Select(x => x.Replace(";;;;;", "")).ToList();
+            Archivo = Archivo.Where(x => !x.Contains(";;;;;")).ToList();
 
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "Texto |*.txt";
@@ -107,8 +108,9 @@ namespace DictionaryCambridgeScrapper
                 try
                 {
                     System.IO.File.WriteAllLines(saveFileDialog.FileName, Archivo);
-                    System.IO.File.WriteAllLines(saveFileDialog.FileName.Insert(saveFileDialog.FileName.LastIndexOf(".txt"), "_SinTraducir"), SinTraducir);
-                    //System.IO.File.AppendAllLines(Form1.PathArchivoYaImportadasEspaniol, ListaPalabras);
+                    if(SinTraducir.Count>0)
+                        System.IO.File.WriteAllLines(saveFileDialog.FileName.Insert(saveFileDialog.FileName.LastIndexOf(".txt"), "_SinTraducir"), SinTraducir);
+                    System.IO.File.AppendAllLines(Form1.PathArchivoYaImportadasEspaniol, ListaPalabras);
                 }
                 catch (IOException e)
                 {
