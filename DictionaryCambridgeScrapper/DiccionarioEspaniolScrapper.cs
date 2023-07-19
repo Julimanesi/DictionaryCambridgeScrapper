@@ -61,7 +61,10 @@ namespace InglesToAnki
                                 break;
                             case "k5"://Formas Complejas Titulo
                             case "k6":
-                                FormasComplejas.Add("<h5>"+HttpUtility.HtmlDecode(nNode.InnerText).Replace(";", ",") + ": </h5>");
+                                string aux = HttpUtility.HtmlDecode(nNode.InnerText).Replace(";", ",");
+                                if(aux != null && aux.Length>0)
+                                    aux = aux[0].ToString().ToUpper()+ aux.Substring(1);
+                                FormasComplejas.Add("<h3>"+ aux + ": </h3>");
                                 break;
                             case "m"://Formas Complejas Definicion
                                 FormasComplejas.Add("<p>" + HttpUtility.HtmlDecode(nNode.InnerText).Replace(";", ",") + "</p>");
