@@ -33,6 +33,8 @@
             this.buttonCargarArchivo = new System.Windows.Forms.Button();
             this.checkBoxCargarDesdeArchivo = new System.Windows.Forms.CheckBox();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.comboBoxIdioma = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // richTextBoxPalabras
@@ -86,11 +88,33 @@
             this.progressBar1.TabIndex = 3;
             this.progressBar1.Visible = false;
             // 
+            // comboBoxIdioma
+            // 
+            this.comboBoxIdioma.FormattingEnabled = true;
+            this.comboBoxIdioma.Items.AddRange(new object[] {
+            "Ingles",
+            "Español"});
+            this.comboBoxIdioma.Location = new System.Drawing.Point(549, 41);
+            this.comboBoxIdioma.Name = "comboBoxIdioma";
+            this.comboBoxIdioma.Size = new System.Drawing.Size(151, 28);
+            this.comboBoxIdioma.TabIndex = 4;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(484, 45);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(59, 20);
+            this.label1.TabIndex = 5;
+            this.label1.Text = "Idioma:";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.comboBoxIdioma);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.checkBoxCargarDesdeArchivo);
             this.Controls.Add(this.buttonCargarArchivo);
@@ -110,5 +134,7 @@
         private Button buttonCargarArchivo;
         private CheckBox checkBoxCargarDesdeArchivo;
         private ProgressBar progressBar1;
+        private ComboBox comboBoxIdioma;
+        private Label label1;
     }
 }

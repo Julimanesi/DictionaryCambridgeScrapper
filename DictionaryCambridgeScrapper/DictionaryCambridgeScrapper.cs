@@ -8,12 +8,12 @@ using System.Xml.Linq;
 
 namespace DictionaryCambridgeScrapper
 {
-    public static class Scrapper
+    public static class DictionaryCambridgeScrapper
     {
         private static readonly string UrlBase = "https://dictionary.cambridge.org/dictionary/english-spanish/";
         private static HtmlWeb web = new HtmlWeb();
         
-        public static Resultado returnResultado(string palabraBuscada )
+        public static ResultadoIngles returnResultado(string palabraBuscada )
         {
             string pronuc = "";
             List<string> Traduclist = new();
@@ -65,7 +65,7 @@ namespace DictionaryCambridgeScrapper
 
             Form1.progreso.Value++;
 
-            return new Resultado(palabraBuscada,pronuc,Traduclist.Distinct().ToList(), OracionesEjemploIngles.Distinct().ToList(),Definiciones.Distinct().ToList());
+            return new ResultadoIngles(palabraBuscada,pronuc,Traduclist.Distinct().ToList(), OracionesEjemploIngles.Distinct().ToList(),Definiciones.Distinct().ToList());
         }
     }
 }

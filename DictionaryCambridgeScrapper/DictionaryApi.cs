@@ -14,18 +14,18 @@ namespace InglesToAnki
     {
         private static readonly string UrlBase = "https://api.dictionaryapi.dev/api/v2/entries/en/";
         private static HttpClient _httpClient = new();
-        public static async Task<Resultado> returnResultado(string palabraBuscada)
+        public static async Task<ResultadoIngles> returnResultado(string palabraBuscada)
         {
             try
             {
                 //var respuestaApi = await _httpClient.GetFromJsonAsync<DictionaryApiDTO>(UrlBase + palabraBuscada);
                 var respuesta = await _httpClient.GetAsync(UrlBase + palabraBuscada);
                 if (respuesta == null)
-                    return new Resultado();
+                    return new ResultadoIngles();
                 if(!respuesta.IsSuccessStatusCode)
-                    return new Resultado();
+                    return new ResultadoIngles();
                 if(respuesta.Content==null)
-                    return new Resultado();
+                    return new ResultadoIngles();
                  //var resultado2 = await respuesta.Content.ReadAsStringAsync();
                  var respuestaApi = await respuesta.Content.ReadFromJsonAsync<List<DictionaryApiDTO>>();
                  List<string> OracionesEjemIngles  = new List<string>();
@@ -41,11 +41,11 @@ namespace InglesToAnki
 
                 Form1.progreso.Value++;
 
-                return new Resultado(palabraBuscada, respuestaApi[0].phonetic,OracionesEjemIngles, Definiciones);
+                return new ResultadoIngles(palabraBuscada, respuestaApi[0].phonetic,OracionesEjemIngles, Definiciones);
             }
             catch(Exception e)
             {
-                return new Resultado();
+                return new ResultadoIngles();
             }
         }
     }

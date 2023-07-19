@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DictionaryCambridgeScrapper
 {
-    public class Resultado
+    public class ResultadoIngles
     {
         public string PalabraBuscada { get; set; } = "";
         public string Pronunciacion { get; set; } = "";
@@ -14,23 +14,23 @@ namespace DictionaryCambridgeScrapper
         public List<string> OracionesEjemIngles { get; set; } = new List<string>();
         public List<string> Definiciones { get; set; } = new List<string>();
 
-        public Resultado()
+        public ResultadoIngles()
         {
         }
 
-        public Resultado(string palabraBuscada, string pronunciacion, List<string> traducciones)
+        public ResultadoIngles(string palabraBuscada, string pronunciacion, List<string> traducciones)
         {
             PalabraBuscada = palabraBuscada;
             Pronunciacion = pronunciacion;
             Traducciones = traducciones;
         }
 
-        public Resultado(string palabraBuscada, string pronunciacion, List<string> oracionesEjemIngles, List<string> definiciones) : this(palabraBuscada, pronunciacion, oracionesEjemIngles)
+        public ResultadoIngles(string palabraBuscada, string pronunciacion, List<string> oracionesEjemIngles, List<string> definiciones) : this(palabraBuscada, pronunciacion, oracionesEjemIngles)
         {
             Definiciones = definiciones;
         }
 
-        public Resultado(string palabraBuscada, string pronunciacion, List<string> traducciones, List<string> oracionesEjemIngles, List<string> definiciones) : this(palabraBuscada, pronunciacion, traducciones)
+        public ResultadoIngles(string palabraBuscada, string pronunciacion, List<string> traducciones, List<string> oracionesEjemIngles, List<string> definiciones) : this(palabraBuscada, pronunciacion, traducciones)
         {
             OracionesEjemIngles = oracionesEjemIngles;
             Definiciones = definiciones;
