@@ -11,6 +11,7 @@ namespace DictionaryCambridgeScrapper
     public static class DictionaryCambridgeScrapper
     {
         private static readonly string UrlBase = "https://dictionary.cambridge.org/dictionary/english-spanish/";
+        private static readonly string UrlBaseSoloIngles = "https://dictionary.cambridge.org/dictionary/english/";
         private static HtmlWeb web = new HtmlWeb();
         
         public static ResultadoIngles returnResultado(string palabraBuscada )
@@ -63,9 +64,35 @@ namespace DictionaryCambridgeScrapper
                 }
             }
 
+            if (!OracionesEjemploIngles.Any())
+            {
+                OracionesEjemploIngles.AddRange(ObtenerEjemplosExtraSoloIngles(palabraBuscada));
+            }
+
             Form1.progreso.Value++;
 
             return new ResultadoIngles(palabraBuscada,pronuc,Traduclist.Distinct().ToList(), OracionesEjemploIngles.Distinct().ToList(),Definiciones.Distinct().ToList());
+        }
+
+        private static List<string> ObtenerEjemplosExtraSoloIngles(string palabra)
+        {
+            List<string> respuesta = new List<string>();
+            var htmlDoc = web.Load(UrlBaseSoloIngles + palabra);
+            var htmlNodePosBody = htmlDoc.DocumentNode.SelectSingleNode("/html/body/div[2]/div/div[1]/div[2]/article/div[2]/div[1]/div[2]/div[2]/div/span/div/div[3]");
+
+            if (htmlNodePosBody != null)
+            {
+                foreach (var nNode in htmlNodePosBody.Descendants("span"))
+                {
+                    
+                    if (nNode.NodeType == HtmlNodeType.Element && nNode.HasAttributes && nNode.Attributes[0].Value == "eg deg")
+                    {
+                        respuesta.Add(nNode.InnerText);
+                    }
+                }                
+            }
+
+            return respuesta;
         }
     }
 }

@@ -61,7 +61,7 @@ namespace DictionaryCambridgeScrapper
             {
                 string aux = resultado.PalabraBuscada + "; " + "[" + resultado.Pronunciacion + "]; ";
                 
-                aux += string.Join('\n', resultado.OracionesEjemIngles);
+                aux += string.Join(' ', resultado.OracionesEjemIngles);
                 aux += ";";
                 aux += string.Join('\n', SeparadorString(resultado.Definiciones));
                 aux += ";";
